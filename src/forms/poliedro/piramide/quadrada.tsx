@@ -27,6 +27,16 @@ export function PoliedroPiramideQuadradaForm({ setValue }: FormProps) {
 
   return (
     <Form {...form}>
+      <p>
+        A<sub>b</sub> = a<sup>2</sup>
+      </p>
+      <p>
+        V = (A<sub>b</sub> × h) / 3
+      </p>
+      <p>
+        A = A<sub>b</sub> + 2 × a × √(h<sup>2</sup> + (a / 2)<sup>2</sup>)
+      </p>
+      <hr />
       <form
         onSubmit={form.handleSubmit((v: FormSchema) => {
           const baseArea = Math.pow(v.arestaBase, 2);
@@ -43,7 +53,7 @@ export function PoliedroPiramideQuadradaForm({ setValue }: FormProps) {
             name="arestaBase"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Aresta da Base (cm)</FormLabel>
+                <FormLabel>(a) Aresta da Base</FormLabel>
                 <FormControl>
                   <Input
                     type="number"
@@ -60,7 +70,7 @@ export function PoliedroPiramideQuadradaForm({ setValue }: FormProps) {
             name="altura"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Altura (cm)</FormLabel>
+                <FormLabel>(h) Altura</FormLabel>
                 <FormControl>
                   <Input
                     type="number"

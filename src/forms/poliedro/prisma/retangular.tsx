@@ -33,6 +33,14 @@ export function PoliedroPrismaRetangularForm({ setValue }: FormProps) {
 
   return (
     <Form {...form}>
+      <p>
+        A<sub>b</sub> = b × c
+      </p>
+      <p>
+        V = A<sub>b</sub> × h
+      </p>
+      <p>A = 2 × (b × c + b × h + c × h)</p>
+      <hr />
       <form
         onSubmit={form.handleSubmit((v: FormSchema) => {
           setValue({
@@ -49,7 +57,7 @@ export function PoliedroPrismaRetangularForm({ setValue }: FormProps) {
             name="arestaBaseBase"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Base da Aresta da Base (cm)</FormLabel>
+                <FormLabel>(b) Base da Aresta da Base</FormLabel>
                 <FormControl>
                   <Input
                     type="number"
@@ -60,12 +68,13 @@ export function PoliedroPrismaRetangularForm({ setValue }: FormProps) {
               </FormItem>
             )}
           />
+
           <FormField
             control={form.control}
             name="arestaBaseAltura"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Altura da Aresta da Base (cm)</FormLabel>
+                <FormLabel>(c) Altura da Aresta da Base</FormLabel>
                 <FormControl>
                   <Input
                     type="number"
@@ -81,8 +90,8 @@ export function PoliedroPrismaRetangularForm({ setValue }: FormProps) {
             control={form.control}
             name="altura"
             render={({ field }) => (
-              <FormItem>
-                <FormLabel>Altura do Sólido (cm)</FormLabel>
+              <FormItem className="col-span-2">
+                <FormLabel>(h) Altura do Sólido</FormLabel>
                 <FormControl>
                   <Input
                     type="number"

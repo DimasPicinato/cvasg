@@ -33,6 +33,17 @@ export function PoliedroPiramideTriangularEscalenoForm({ setValue }: FormProps) 
 
   return (
     <Form {...form}>
+      <p>
+        A<sub>b</sub> = (b × c) / 2
+      </p>
+      <p>
+        V = (A<sub>b</sub> × h) / 3
+      </p>
+      <p>
+        A = A<sub>b</sub> + ((b + √(c<sup>2</sup> + (b / 2)<sup>2</sup>) + √(c<sup>2</sup> + (b / 2)<sup>2</sup>)) × h)
+        / 2
+      </p>
+      <hr />
       <form
         onSubmit={form.handleSubmit((v: FormSchema) => {
           const baseArea = (v.arestaBaseBase * v.arestaBaseAltura) / 2;
@@ -55,7 +66,7 @@ export function PoliedroPiramideTriangularEscalenoForm({ setValue }: FormProps) 
             name="arestaBaseBase"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Base da Aresta da Base (cm)</FormLabel>
+                <FormLabel>(b) Base da Aresta da Base</FormLabel>
                 <FormControl>
                   <Input
                     type="number"
@@ -66,12 +77,13 @@ export function PoliedroPiramideTriangularEscalenoForm({ setValue }: FormProps) 
               </FormItem>
             )}
           />
+
           <FormField
             control={form.control}
             name="arestaBaseAltura"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Altura da Aresta da Base (cm)</FormLabel>
+                <FormLabel>(c) Altura da Aresta da Base</FormLabel>
                 <FormControl>
                   <Input
                     type="number"
@@ -87,8 +99,8 @@ export function PoliedroPiramideTriangularEscalenoForm({ setValue }: FormProps) 
             control={form.control}
             name="altura"
             render={({ field }) => (
-              <FormItem>
-                <FormLabel>Altura do Sólido (cm)</FormLabel>
+              <FormItem className="col-span-2">
+                <FormLabel>(h) Altura do Sólido</FormLabel>
                 <FormControl>
                   <Input
                     type="number"

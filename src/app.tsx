@@ -1,5 +1,8 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
+import { CorpoRedondoCilindroForm } from './forms/corpos-redondos/cilindro';
+import { CorpoRedondoConeForm } from './forms/corpos-redondos/cone';
+import { CorpoRedondoEsferaForm } from './forms/corpos-redondos/esfera';
 import { PoliedroPiramideHexagonoRegularForm } from './forms/poliedro/piramide/hexagono-regular';
 import { PoliedroPiramideQuadradaForm } from './forms/poliedro/piramide/quadrada';
 import { PoliedroPiramideRetangularForm } from './forms/poliedro/piramide/retangular';
@@ -30,11 +33,16 @@ export function App() {
   >(null);
   const [value, setValue] = useState<{ volume: number; area: number } | null>(null);
 
+  useEffect(() => setValue(null), [solidoGeometrico, poliedroType, corpoRedondoType, poliedroBase]);
+
   return (
     <div className="flex min-h-[100dvh] w-full flex-col items-center gap-8">
       <header className="bg-foreground text-background flex w-full flex-col items-center gap-2 p-4">
-        <h2>Trabalho de Matemática</h2>
-        <h5>Cálculo de volumes de formas geométricas tridimensionais.</h5>
+        <h2>Cálculadora de Volume e Área de Sólidos Geométricos</h2>
+        <h5>
+          Elaborado por Dimas Picinato em colaboração com Marco Antônio e Ryan Gabriel como trabalho avaliativo de
+          Matemática na Etec de Lins.
+        </h5>
       </header>
 
       <div className="flex h-full flex-1 flex-col gap-4">
@@ -110,6 +118,12 @@ export function App() {
                   >
                     Triângulo Escaleno
                   </Button>
+                  <Button
+                    variant={poliedroBase === 'hexagonoRegular' ? 'default' : 'outline'}
+                    onClick={() => setPoliedroBase('hexagonoRegular')}
+                  >
+                    Hexágono Regular
+                  </Button>
                 </div>
               </div>
             )}
@@ -145,49 +159,59 @@ export function App() {
         <hr />
 
         {(() => {
-          switch (poliedroType) {
-            case 'prisma':
-              switch (poliedroBase) {
-                case 'quadrada':
-                  return <PoliedroPrismaQuadradaForm setValue={setValue} />;
-                case 'retangular':
-                  return <PoliedroPrismaRetangularForm setValue={setValue} />;
-                case 'triangularEquilatero':
-                  return <PoliedroPrismaTriangularEquilateroForm setValue={setValue} />;
-                case 'triangularIsosceles':
-                  return <PoliedroPrismaTriangularIsoscelesForm setValue={setValue} />;
-                case 'triangularEscaleno':
-                  return <PoliedroPrismaTriangularEscalenoForm setValue={setValue} />;
-                case 'hexagonoRegular':
-                  return <PoliedroPrismaHexagonoRegularForm setValue={setValue} />;
+          switch (solidoGeometrico) {
+            case 'poliedro': {
+              switch (poliedroType) {
+                case 'prisma': {
+                  switch (poliedroBase) {
+                    case 'quadrada':
+                      return <PoliedroPrismaQuadradaForm setValue={setValue} />;
+                    case 'retangular':
+                      return <PoliedroPrismaRetangularForm setValue={setValue} />;
+                    case 'triangularEquilatero':
+                      return <PoliedroPrismaTriangularEquilateroForm setValue={setValue} />;
+                    case 'triangularIsosceles':
+                      return <PoliedroPrismaTriangularIsoscelesForm setValue={setValue} />;
+                    case 'triangularEscaleno':
+                      return <PoliedroPrismaTriangularEscalenoForm setValue={setValue} />;
+                    case 'hexagonoRegular':
+                      return <PoliedroPrismaHexagonoRegularForm setValue={setValue} />;
+                  }
+                  return;
+                }
+
+                case 'piramide': {
+                  switch (poliedroBase) {
+                    case 'quadrada':
+                      return <PoliedroPiramideQuadradaForm setValue={setValue} />;
+                    case 'retangular':
+                      return <PoliedroPiramideRetangularForm setValue={setValue} />;
+                    case 'triangularEquilatero':
+                      return <PoliedroPiramideTriangularEquilateroForm setValue={setValue} />;
+                    case 'triangularIsosceles':
+                      return <PoliedroPiramideTriangularIsoscelesForm setValue={setValue} />;
+                    case 'triangularEscaleno':
+                      return <PoliedroPiramideTriangularEscalenoForm setValue={setValue} />;
+                    case 'hexagonoRegular':
+                      return <PoliedroPiramideHexagonoRegularForm setValue={setValue} />;
+                  }
+                  return;
+                }
               }
               return;
+            }
 
-            case 'piramide':
-              switch (poliedroBase) {
-                case 'quadrada':
-                  return <PoliedroPiramideQuadradaForm setValue={setValue} />;
-                case 'retangular':
-                  return <PoliedroPiramideRetangularForm setValue={setValue} />;
-                case 'triangularEquilatero':
-                  return <PoliedroPiramideTriangularEquilateroForm setValue={setValue} />;
-                case 'triangularIsosceles':
-                  return <PoliedroPiramideTriangularIsoscelesForm setValue={setValue} />;
-                case 'triangularEscaleno':
-                  return <PoliedroPiramideTriangularEscalenoForm setValue={setValue} />;
-                case 'hexagonoRegular':
-                  return <PoliedroPiramideHexagonoRegularForm setValue={setValue} />;
+            case 'corpoRedondo': {
+              switch (corpoRedondoType) {
+                case 'cilindro':
+                  return <CorpoRedondoCilindroForm setValue={setValue} />;
+                case 'cone':
+                  return <CorpoRedondoConeForm setValue={setValue} />;
+                case 'esfera':
+                  return <CorpoRedondoEsferaForm setValue={setValue} />;
               }
               return;
-          }
-
-          switch (corpoRedondoType) {
-            case 'cilindro':
-              return <CorpoRedondoCilindroForm setValue={setValue} />;
-            case 'cone':
-              return <CorpoRedondoConeForm setValue={setValue} />;
-            case 'esfera':
-              return <CorpoRedondoEsferaForm setValue={setValue} />;
+            }
           }
         })()}
 
@@ -196,16 +220,19 @@ export function App() {
             <hr />
             <div className="flex flex-col gap-2">
               <h3>
-                Volume: {value.volume}cm<sup>3</sup>
-                Área: {value.area}cm<sup>2</sup>
+                Volume = {value.volume}u<sup>3</sup>
+              </h3>
+              <h3>
+                Área = {value.area}u<sup>2</sup>
               </h3>
             </div>
+            <p>As medidas estão em unidades genéricas (u² para área e u³ para volume).</p>
           </>
         )}
       </div>
 
       <footer className="bg-foreground text-background flex w-full flex-col items-center gap-2 p-4">
-        <h5>Por: Dimas Picinato, Marco Antônio e Ryan Gabriel Marco Antônio</h5>
+        <h5>Por: Dimas Picinato, Marco Antônio e Ryan Gabriel.</h5>
       </footer>
     </div>
   );

@@ -27,6 +27,16 @@ export function PoliedroPrismaHexagonoRegularForm({ setValue }: FormProps) {
 
   return (
     <Form {...form}>
+      <p>
+        A<sub>b</sub> = (3 × √3 / 2) × a<sup>2</sup>
+      </p>
+      <p>
+        V = A<sub>b</sub> × h
+      </p>
+      <p>
+        A = 2 × A<sub>b</sub> + 6 × a × h
+      </p>
+      <hr />
       <form
         onSubmit={form.handleSubmit((v: FormSchema) => {
           const baseArea = ((3 * Math.sqrt(3)) / 2) * Math.pow(v.arestaBase, 2);
@@ -43,7 +53,7 @@ export function PoliedroPrismaHexagonoRegularForm({ setValue }: FormProps) {
             name="arestaBase"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Aresta da Base (cm)</FormLabel>
+                <FormLabel>(a) Aresta da Base</FormLabel>
                 <FormControl>
                   <Input
                     type="number"
@@ -60,7 +70,7 @@ export function PoliedroPrismaHexagonoRegularForm({ setValue }: FormProps) {
             name="altura"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Altura (cm)</FormLabel>
+                <FormLabel>(h) Altura</FormLabel>
                 <FormControl>
                   <Input
                     type="number"
