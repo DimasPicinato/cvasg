@@ -1,0 +1,79 @@
+import { useForm } from 'react-hook-form';
+
+import { minNumber } from '@/constants/min-number';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { z } from 'zod';
+
+import type { FormProps } from '@/@types/form-props';
+
+import { Button } from '@/components/ui/button';
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
+import { Input } from '@/components/ui/input';
+
+export function PoliedroPrismaQuadradaForm({ setValue }: FormProps) {
+  type FormSchema = z.infer<typeof formSchema>;
+  const formSchema = z.object({
+    arestaBase: z.coerce.number('Insira um número válido!').min(minNumber, `Insira um número maior que ${minNumber}`),
+    altura: z.coerce.number('Insira um número válido!').min(minNumber, `Insira um número maior que ${minNumber}`),
+  });
+
+  const form = useForm({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      arestaBase: 1,
+      altura: 1,
+    },
+  });
+
+  return (
+    <Form {...form}>
+      <form
+        onSubmit={form.handleSubmit((v: FormSchema) => {
+          setValue({
+            volume: Math.pow(v.arestaBase, 2) * v.altura,
+            area: 2 * Math.pow(v.arestaBase, 2) + 4 * v.arestaBase * v.altura,
+          });
+        })}
+        className="flex flex-col gap-4"
+      >
+        <div className="grid grid-cols-2 items-start gap-4">
+          <FormField
+            control={form.control}
+            name="arestaBase"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Aresta da Base (cm)</FormLabel>
+                <FormControl>
+                  <Input
+                    type="number"
+                    {...(field as React.ComponentProps<'input'>)}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="altura"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Altura (cm)</FormLabel>
+                <FormControl>
+                  <Input
+                    type="number"
+                    {...(field as React.ComponentProps<'input'>)}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </div>
+
+        <Button>Calcular</Button>
+      </form>
+    </Form>
+  );
+}
