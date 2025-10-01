@@ -36,13 +36,13 @@ export function App() {
   useEffect(() => setValue(null), [solidoGeometrico, poliedroType, corpoRedondoType, poliedroBase]);
 
   return (
-    <div className="flex min-h-[100dvh] w-full flex-col items-center gap-8">
+    <div className="flex min-h-[100dvh] w-full flex-col items-center gap-4">
       <header className="bg-foreground text-background flex w-full flex-col items-center gap-2 p-4">
         <h2>Cálculadora de Volume e Área de Sólidos Geométricos</h2>
         <h5>Elaborado por Dimas Picinato como trabalho avaliativo de Matemática na Etec de Lins.</h5>
       </header>
 
-      <div className="flex h-full flex-1 flex-col gap-4 not-sm:w-full not-sm:px-4">
+      <div className="flex h-full w-[890px] max-w-full flex-1 flex-col gap-4 px-4">
         <div className="flex flex-col">
           <h4>Selecione o tipo de sólido geométrico:</h4>
           <div className="flex items-center gap-2">
@@ -84,7 +84,7 @@ export function App() {
             {poliedroType && (
               <div className="flex flex-col">
                 <h4>Selecione a base do poliedro:</h4>
-                <div className="flex items-center gap-2">
+                <div className="flex flex-wrap items-center gap-2">
                   <Button
                     variant={poliedroBase === 'quadrada' ? 'default' : 'outline'}
                     onClick={() => setPoliedroBase('quadrada')}
